@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import autosize from 'autosize';
 
 const UPDATE = 'autosize:update',
@@ -18,15 +19,15 @@ const TextareaAutosize = React.createClass({
   },
 
   componentDidMount() {
-    autosize(this.refs.textarea.getDOMNode());
+    autosize(ReactDOM.findDOMNode(this.refs.textarea));
     if (this.props.onResize) {
-      this.refs.textarea.getDOMNode().addEventListener(RESIZED, this.props.onResize);
+      ReactDOM.findDOMNode(this.refs.textarea).addEventListener(RESIZED, this.props.onResize);
     }
   },
 
   componentWillUnmount() {
     if (this.props.onResize) {
-      this.refs.textarea.getDOMNode().removeEventListener(RESIZED, this.props.onResize);
+      ReactDOM.findDOMNode(this.refs.textarea).removeEventListener(RESIZED, this.props.onResize);
     }
     this.dispatchEvent(DESTROY);
   },
@@ -34,7 +35,7 @@ const TextareaAutosize = React.createClass({
   dispatchEvent(EVENT_TYPE, defer) {
     const event = document.createEvent('Event');
     event.initEvent(EVENT_TYPE, true, false);
-    const dispatch = () => this.refs.textarea.getDOMNode().dispatchEvent(event);
+    const dispatch = () => ReactDOM.findDOMNode(this.refs.textarea).dispatchEvent(event);
     if (defer) {
       setTimeout(dispatch);
     } else {

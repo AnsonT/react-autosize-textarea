@@ -1,5 +1,6 @@
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
 import TextareaAutosize from '../../src/TextareaAutosize';
 
@@ -29,7 +30,8 @@ describe('TextareaAutosize', function() {
       </div>;
     const textareaWrapper = TestUtils.renderIntoDocument(component);
     const textarea = TestUtils.findRenderedDOMComponentWithClass(textareaWrapper, 'textarea-autosize');
-    const value = textarea.getDOMNode().innerHTML;
+    const value = ReactDOM.findDOMNode(textArea).innerHTML;
+    //const value = textarea.getDOMNode().innerHTML;
     expect(value).toBe(initialValue, 'intial value is not displayed correctly');
   });
 
